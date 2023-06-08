@@ -40,4 +40,4 @@ void *output_func(void *arg);
 
 void *output_file(void *arg);
 
-void *func_ary[FUNCTION_SIZE] = {*input_func, *output_func, *output_file};
+static void *func_ary[FUNCTION_SIZE] = {*input_func, *output_func, *output_file};
