@@ -35,16 +35,13 @@ int enqueue(Queue *queue, int data)
 {
     Node *newNode = (Node *)malloc(sizeof(Node)); // newNode 생성
     newNode->data = data;
-    newNode->next = NULL;
+    newNode->next = queue->rear;
 
     if (isEmpty(queue)) // 큐가 비어있을 때
     {
         queue->front = newNode;
     }
-    else // 비어있지 않을 때
-    {
-        queue->rear->next = newNode; // 맨 뒤의 다음을 newNode로 설정
-    }
+
     queue->rear = newNode; // 맨 뒤를 newNode로 설정
     queue->count++;        // 큐안의 노드 개수를 1 증가
     return (queue->count);
@@ -60,10 +57,10 @@ values dequeue(Queue *queue)
         printf("Error : Queue is empty!\n");
         return num;
     }
-    ptr = queue->front;       // 맨 앞의 노드 ptr 설정
-    data = ptr->data;         // return 할 데이터
-    queue->front = ptr->next; // 맨 앞은 ptr의 다음 노드로 설정
-    free(ptr);                // ptr 해제
+    ptr = queue->rear;       // 맨 앞의 노드 ptr 설정
+    data = ptr->data;        // return 할 데이터
+    queue->rear = ptr->next; // 맨 앞은 ptr의 다음 노드로 설정
+    free(ptr);               // ptr 해제
     // queue->count--;
 
     num.count = queue->count--; // 큐의 노드 개수를 1 감소
@@ -82,7 +79,7 @@ int main(void)
         printf("%d번째 데이터 %d\n", enqueue(&queue, i), i);
     }
     printf("\n");
-    for (i = 1; i <= 4; i++) // 큐가 빌 때까지
+    for (i = 1; i <= 2; i++) // 큐가 빌 때까지
     {
         values re = dequeue(&queue);
         printf("%d번째 데이터 %d\n", re.count, re.data); // 큐에서 꺼내온 값 출력

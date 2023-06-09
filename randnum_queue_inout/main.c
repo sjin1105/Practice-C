@@ -3,31 +3,32 @@
 int main(void)
 {
     pthread_mutex_init(&mutex, NULL);
-    pthread_mutex_init(&mutex_file, NULL);
+    pthread_mutex_init(&num_mutex, NULL);
+
     int thr_id;
     int status;
-    int i;
 
     init_queue(&queue);
-    init_queue(&file_queue);
 
-    int q_num = 0;
-    FILE *qfile = fopen("a.txt", "wb");
-    while (q_num != 101)
+    thr_id = pthread_create(&p_thread[0], NULL, input_func, (void *)NULL);
+    if (thr_id < 0)
     {
-        fprintf(qfile, "%d\n", q_num);
-        q_num++;
+        perror("thread create error : ");
+        exit(0);
     }
-    fclose(qfile);
 
-    for (i = 0; i < FUNCTION_SIZE; i++)
+    thr_id = pthread_create(&p_thread[1], NULL, output_func, (void *)NULL);
+    if (thr_id < 0)
     {
-        thr_id = pthread_create(&p_thread[i], NULL, func_ary[i], (void *)NULL);
-        if (thr_id < 0)
-        {
-            perror("thread create error : ");
-            exit(0);
-        }
+        perror("thread create error : ");
+        exit(0);
+    }
+
+    thr_id = pthread_create(&p_thread[2], NULL, input_num, (void *)NULL);
+    if (thr_id < 0)
+    {
+        perror("thread create error : ");
+        exit(0);
     }
 
     int a = 0;
@@ -35,7 +36,7 @@ int main(void)
     scanf("%d", &a);
     if (a == 1)
     {
-        for (i = 0; i < FUNCTION_SIZE; i++)
+        for (int i = 0; i < 3; i++)
         {
             pthread_cancel(p_thread[i]);
         }
@@ -46,7 +47,7 @@ int main(void)
     // pthread_join(p_thread[2], (void **)&status);
 
     pthread_mutex_destroy(&mutex);
-    pthread_mutex_destroy(&mutex_file);
+    pthread_mutex_destroy(&num_mutex);
 
     return 0;
 }

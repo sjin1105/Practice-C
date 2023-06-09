@@ -1,0 +1,4 @@
+SET(C_FILES main.c)
+SET(EXE_NAME Runfile)
+
+ADD_EXECUTABLE(${EXE_NAME} ${C_FILES})

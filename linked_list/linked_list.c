@@ -6,7 +6,7 @@ typedef struct listNode
 {
     struct listNode *next;
     int data;
-}listNode;
+} listNode;
 
 listNode *init_list()
 {
@@ -74,7 +74,7 @@ listNode *read_node_data(listNode *h, int data)
     {
         cur = cur->next;
     }
-    if(cur->next == NULL)
+    if (cur->next == NULL)
     {
         printf("wrong data\n");
         return (h);
@@ -86,7 +86,7 @@ listNode *read_node_data(listNode *h, int data)
 void add_first_node(listNode *h, int data)
 {
     listNode *newNode;
-    newNode = (listNode *) malloc(sizeof(listNode));
+    newNode = (listNode *)malloc(sizeof(listNode));
     newNode->data = data;
     newNode->next = h->next;
     h->next = newNode;
@@ -97,23 +97,22 @@ void add_last_node(listNode *h, int data)
     listNode *end;
     end = find_end(h);
     listNode *newNode;
-    newNode = (listNode *) malloc(sizeof(listNode));
+    newNode = (listNode *)malloc(sizeof(listNode));
     newNode->data = data;
     end->next = newNode;
     newNode->next = NULL;
-
 }
 
 void insert_node(listNode *h, int n, int data)
 {
     if (n == 1)
-        add_first_node(h,data);
+        add_first_node(h, data);
     else if (n == node_len(h))
         add_last_node(h, data);
     else if (n < 1 && n > node_len(h))
     {
         printf("wrong range\n");
-        return ;
+        return;
     }
     else
     {
@@ -127,7 +126,7 @@ void insert_node(listNode *h, int n, int data)
             i++;
         }
         listNode *newNode;
-        newNode = (listNode *) malloc(sizeof(listNode));
+        newNode = (listNode *)malloc(sizeof(listNode));
         newNode->data = data;
         newNode->next = prev->next;
         prev->next = newNode;
@@ -138,10 +137,10 @@ void edit_node(listNode *h, int search, int modify)
 {
     listNode *s;
     s = read_node_idx(h, search);
-    //s = read_node_data(search);
-    if(s == h)
+    // s = read_node_data(search);
+    if (s == h)
     {
-        return ;
+        return;
     }
     s->data = modify;
 }
@@ -163,7 +162,7 @@ void delete_node(listNode *h, int n)
     else if (n < 1 && n > node_len(h))
     {
         printf("wrong range\n");
-        return ;
+        return;
     }
     else
     {
@@ -191,14 +190,13 @@ void delete_all_node(listNode *h)
     cur = h;
 
     listNode *nxt;
-    while(cur != NULL)
+    while (cur != NULL)
     {
         nxt = cur->next;
 
         free(cur);
         cur = nxt;
     }
-    
 }
 
 void print_all_node(listNode *h)
@@ -206,7 +204,7 @@ void print_all_node(listNode *h)
     listNode *cur;
     cur = h->next;
 
-    if(cur != NULL)
+    if (cur != NULL)
     {
         while (1)
         {
